@@ -5,7 +5,7 @@ name: Basic Workflow
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI or API.
 on:
-  workflow_dispatch:
+  workflow_dispatch: 
     # Inputs the workflow accepts.
     inputs:
       name:
@@ -30,6 +30,10 @@ on:
         description: "Is your favorite color blue"
         required: true
         type: boolean
+      not-so-fav-color:
+        description: "Whats your not so favorite color"
+        required: true
+        type: string
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
