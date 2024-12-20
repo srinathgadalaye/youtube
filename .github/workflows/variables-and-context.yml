@@ -87,14 +87,14 @@ jobs:
       VAR3: myjobvar3
     steps:
 
-      - run: |
+      - name: Step 1
+        id: step1
+        env:
+          VAR3: mystepvar3
+        run: |
           echo $VAR1
           echo ${{env.VAR1}}
-
           echo ""
-
           echo $VAR2
-
           echo $VAR3
-        env: 
-          VAR3: mystepvar3
+        
