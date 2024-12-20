@@ -35,11 +35,13 @@ jobs:
           INPUTS: ${{ toJSON(inputs) }}
           SECRETS: ${{ toJson(secrets) }}
           ENV: ${{ toJson(env) }}
+          RUNNER: ${{ toJson(runner) }}
         run: |
           echo "GITHUB_CONTEXT:\n$GITHUB_CONTEXT"
           echo "INPUTS:\n$INPUTS"
           echo "SECRETS:\n$SECRETS"
           echo "ENV:\n$ENV"
+          echo "RUNNER:\n$RUNNER"
       
   #step/job output variables
   job2:
