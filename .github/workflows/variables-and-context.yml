@@ -92,9 +92,8 @@ jobs:
         env:
           VAR3: mystepvar3
         run: |
-          echo $VAR1
-          echo ${{env.VAR1}}
-          echo ""
-          echo $VAR2
-          echo $VAR3
+          echo "VAR1: $VAR1"
+          echo "env.VAR1: ${{env.VAR1}}"
+          echo "VAR2: $VAR2"
+          echo "VAR3: $VAR3"
         
