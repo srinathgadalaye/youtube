@@ -36,32 +36,28 @@ jobs:
 
       - name: Build
         run: dotnet build "${{github.workspace}}/src/my-web-app.sln"  --no-restore --configuration Release
-
-      - name: Check Release directory
-        run: |
-          echo "ls -al ${{github.workspace}}/src/my-web-app/bin/Release/net8.0"
-          ls -al ${{github.workspace}}/src/my-web-app/bin/Release/net8.0
           
       - name: Test
         run: dotnet test "${{github.workspace}}/src/my-web-app.sln" --no-restore --logger:"junit;LogFilePath=${{ github.workspace }}/results/test-results.xml"
-
-      - name: Check Test Results
-        run: |
-          echo "cat ${{ github.workspace }}/results/test-results.xml"
-          cat ${{ github.workspace }}/results/test-results.xml
-          
+    
       # create a test summary markdown file
       # if you don't specify an output file, it will automatically add
       # as a job summary. If you specify an output file, you have to
       # create your own step of adding it to the job summary. I am
       # intentionally doing that to show job summaries
-      # - name: Create test summary
-      #   uses: test-summary/action@v2.4
-      #   with:
-      #     paths: ${{ github.workspace }}/results/*.xml
-      #     output: ${{ github.workspace }}/results/summary.md
-      #     show: "all"
-      #   if: always()
+      - name: Create test summary
+        uses: test-summary/action@v2.4
+        with:
+          paths: ${{ github.workspace }}/results/*.xml
+          output: ${{ github.workspace }}/results/summary.md
+          show: "all"
+        if: always()
+
+      - name: Contents of test summary
+        if: always()
+        run: |
+          echo "cat ${{ github.workspace }}/results/summary.md"
+          cat ${{ github.workspace }}/results/summary.md
 
       # I am adding the test results to the Job Summary
       #- name: Add Test Results To Job Summary
