@@ -11,13 +11,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checking contents of working directory
+        run: |
+          echo "running ls -al ${{ github.workspace }}"
+          ls -al ${{ github.workspace }}
+
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Checking contents of working directory again
+        run: |
+          echo "running ls -al ${{ github.workspace }}"
+          ls -al ${{ github.workspace }}
+
+      - name: Check dotnet version
+        run: |
+          echo "running where dotnet"
+          where dotnet
+          echo "running dotnet --version"
+          dotnet --version
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v4.1.0
         with:
           dotnet-version: "8.0.x"
+
+      - name: Check dotnet version again
+        run: |
+          echo "running where dotnet"
+          where dotnet
+          echo "running dotnet --version"
+          dotnet --version
 
       - name: Restore dependencies
         run: dotnet restore "${{github.workspace}}/src/my-web-app.sln"
@@ -33,28 +57,28 @@ jobs:
       # as a job summary. If you specify an output file, you have to
       # create your own step of adding it to the job summary. I am
       # intentionally doing that to show job summaries
-      - name: Create test summary
-        uses: test-summary/action@v2.4
-        with:
-          paths: ${{ github.workspace }}/results/*.xml
-          output: ${{ github.workspace }}/results/summary.md
-          show: "all"
-        if: always()
+      # - name: Create test summary
+      #   uses: test-summary/action@v2.4
+      #   with:
+      #     paths: ${{ github.workspace }}/results/*.xml
+      #     output: ${{ github.workspace }}/results/summary.md
+      #     show: "all"
+      #   if: always()
 
       # I am adding the test results to the Job Summary
-      - name: Add Test Results To Job Summary
-        run: |
-          echo "TEST RESULTS:" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
-          cat "${{ github.workspace }}/results/summary.md" >> $GITHUB_STEP_SUMMARY
-        if: always()
+      #- name: Add Test Results To Job Summary
+      #  run: |
+      #    echo "TEST RESULTS:" >> $GITHUB_STEP_SUMMARY
+      #    echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
+      #    cat "${{ github.workspace }}/results/summary.md" >> $GITHUB_STEP_SUMMARY
+      #  if: always(#)#
 
-      - name: Publish
-        run: dotnet publish "${{github.workspace}}/src/my-web-app/my-web-app.csproj" -c Release -o mywebapp
+      #- name: Publish
+      #  run: dotnet publish "${{github.workspace}}/src/my-web-app/my-web-app.csproj" -c Release -o mywebapp
 
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: myapp
-          path: mywebapp/**
-          if-no-files-found: error
+      #- name: Upload build artifact
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    name: myapp
+      #    path: mywebapp/**
+      #    if-no-files-found: error
