@@ -11,23 +11,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checking contents of working directory
-        run: |
-          echo "running ls -al ${{ github.workspace }}"
-          ls -al ${{ github.workspace }}
-
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Checking contents of working directory again
         run: |
-          echo "running ls -al ${{ github.workspace }}"
+          echo "ls -al ${{ github.workspace }}"
           ls -al ${{ github.workspace }}
 
       - name: Check dotnet version
         run: |
-          echo "running where dotnet"
-          where dotnet
+          echo "running which dotnet"
+          which dotnet
           echo "running dotnet --version"
           dotnet --version
 
